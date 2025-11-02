@@ -14,6 +14,19 @@ const carDataServices = {
 					if (response.ok) {
 						const xmlData = await response.text();
 
+						// Vérifier si la réponse est vide ou invalide
+						if (!xmlData || xmlData.trim().length === 0) {
+							console.error("Empty response from API");
+							throw new Error("Empty response from API");
+						}
+
+						// Vérifier si la réponse commence par du XML valide (<?xml ou <)
+						const trimmedData = xmlData.trim();
+						if (!trimmedData.startsWith("<?xml") && !trimmedData.startsWith("<")) {
+							console.error("Response is not valid XML. First 200 chars:", trimmedData.substring(0, 200));
+							throw new Error(`Invalid XML response: ${trimmedData.substring(0, 100)}`);
+						}
+
 						return new Promise((resolve, reject) => {
 							parseString(
 								xmlData,
@@ -21,21 +34,30 @@ const carDataServices = {
 								(err, result) => {
 									if (err) {
 										console.error("Error converting XML to JSON:", err);
-										reject("Error converting XML to JSON");
+										console.error("Response content (first 500 chars):", xmlData.substring(0, 500));
+										reject(new Error(`Error converting XML to JSON: ${err.message}`));
 									} else {
-										const cars = result.vehicules.vehicule;
-										resolve(cars);
+										// Vérifier si la structure attendue existe
+										if (result && result.vehicules && result.vehicules.vehicule) {
+											const cars = result.vehicules.vehicule;
+											resolve(cars);
+										} else {
+											console.error("Unexpected XML structure:", JSON.stringify(result, null, 2));
+											reject(new Error("Unexpected XML structure in response"));
+										}
 									}
 								}
 							);
 						});
 					} else {
+						const errorText = await response.text().catch(() => "No error details");
 						console.error(
 							"Wrong response:",
 							response.status,
-							response.statusText
+							response.statusText,
+							errorText.substring(0, 200)
 						);
-						throw new Error("Server-side Fetch request error");
+						throw new Error(`Server-side Fetch request error: ${response.status} ${response.statusText}`);
 					}
 				} else {
 					console.error("No response received from the server");
@@ -47,7 +69,11 @@ const carDataServices = {
 			}
 		} catch (error) {
 			console.error("Server-side Fetch request error", error);
-			throw new Error("Server-side Fetch request error");
+			// Préserver le message d'erreur original s'il existe
+			if (error.message) {
+				throw error;
+			}
+			throw new Error(`Server-side Fetch request error: ${error.message || error}`);
 		}
 	},
 };
