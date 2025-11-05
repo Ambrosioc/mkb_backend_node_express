@@ -10,15 +10,13 @@ router.get("/", async (req, res) => {
 	} catch (error) {
 		console.error("carDataRoute:", error);
 		
-		// Déterminer le code de statut approprié
 		let statusCode = 500;
 		if (error.message && error.message.includes("not defined")) {
-			statusCode = 503; // Service Unavailable
+			statusCode = 503;
 		} else if (error.message && error.message.includes("Invalid XML")) {
-			statusCode = 502; // Bad Gateway (problème avec l'API externe)
+			statusCode = 502;
 		}
 		
-		// Retourner une réponse JSON structurée
 		res.status(statusCode).json({
 			error: true,
 			message: error.message || "Server-side error",

@@ -276,6 +276,124 @@ const apiInfo = `
       overflow-x: auto;
     }
     
+    /* Test Interface */
+    .test-section {
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 2px solid #e2e8f0;
+    }
+    
+    .test-button {
+      background: #667eea;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 1em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 16px;
+    }
+    
+    .test-button:hover {
+      background: #5568d3;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    }
+    
+    .test-button:disabled {
+      background: #94a3b8;
+      cursor: not-allowed;
+      transform: none;
+    }
+    
+    .test-result {
+      margin-top: 20px;
+      padding: 20px;
+      border-radius: 8px;
+      display: none;
+    }
+    
+    .test-result.success {
+      background: #f0fdf4;
+      border: 1px solid #10b981;
+    }
+    
+    .test-result.error {
+      background: #fef2f2;
+      border: 1px solid #ef4444;
+    }
+    
+    .test-result-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+    
+    .test-result.success .test-result-header {
+      color: #065f46;
+    }
+    
+    .test-result.error .test-result-header {
+      color: #991b1b;
+    }
+    
+    .test-result-content {
+      max-height: 400px;
+      overflow-y: auto;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9em;
+      white-space: pre-wrap;
+      word-break: break-word;
+      background: white;
+      padding: 16px;
+      border-radius: 6px;
+      border: 1px solid #e2e8f0;
+    }
+    
+    .test-loading {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid #f3f4f6;
+      border-top-color: #667eea;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-left: 8px;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    .test-input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9em;
+      margin-top: 8px;
+      resize: vertical;
+    }
+    
+    .test-input:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+    
+    .test-label {
+      display: block;
+      margin-top: 16px;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #334155;
+    }
+    
     /* Mobile Responsive */
     .mobile-menu-toggle {
       display: none;
@@ -348,6 +466,7 @@ const apiInfo = `
         <div class="nav-section-title">Ressources</div>
         <a href="#examples" class="nav-item" data-section="examples">Exemples</a>
         <a href="#errors" class="nav-item" data-section="errors">Codes d'erreur</a>
+        <a href="#resources" class="nav-item" data-section="resources">Liens utiles</a>
       </div>
     </nav>
     
@@ -371,11 +490,34 @@ const apiInfo = `
         <div class="section-description">
           <p>Bienvenue dans la documentation de l'API MKB-Automobile. Cette API REST permet de gérer et récupérer des données automobiles depuis différentes sources externes.</p>
           <p style="margin-top: 16px;">L'API utilise Express.js et supporte les requêtes CORS pour une intégration facile avec vos applications frontend.</p>
+          <p style="margin-top: 16px;">
+            <a href="#resources" onclick="showSection('resources', event.target)" style="color: #667eea; text-decoration: none;">
+              📚 Découvrir les ressources et outils utiles →
+            </a>
+          </p>
         </div>
         
         <div class="info-box">
           <p><strong>Base URL:</strong> <code>http://localhost:5000</code></p>
           <p style="margin-top: 8px;"><strong>Format de réponse:</strong> JSON (sauf indication contraire)</p>
+          <p style="margin-top: 8px;">
+            <a href="https://developer.mozilla.org/fr/docs/Glossary/REST" target="_blank" style="color: #667eea; font-size: 0.9em;">
+              → Qu'est-ce qu'une API REST ? (MDN)
+            </a>
+          </p>
+        </div>
+        
+        <div class="endpoint-card" style="margin-top: 24px;">
+          <div class="subsection-title">🚀 Démarrage rapide</div>
+          <div class="subsection">
+            <p style="margin-bottom: 12px;">Pour commencer à utiliser l'API :</p>
+            <ol style="padding-left: 20px; line-height: 1.8;">
+              <li>Consultez la section <a href="#endpoint-cars" onclick="showSection('endpoint-cars', event.target)" style="color: #667eea;">Endpoints</a> pour voir les routes disponibles</li>
+              <li>Testez les endpoints avec les exemples fournis dans la section <a href="#examples" onclick="showSection('examples', event.target)" style="color: #667eea;">Exemples</a></li>
+              <li>Consultez les <a href="#errors" onclick="showSection('errors', event.target)" style="color: #667eea;">Codes d'erreur</a> pour comprendre les réponses</li>
+              <li>Explorez les <a href="#resources" onclick="showSection('resources', event.target)" style="color: #667eea;">Ressources</a> pour des outils et tutoriels</li>
+            </ol>
+          </div>
         </div>
       </section>
       
@@ -419,6 +561,15 @@ const apiInfo = `
 Page de documentation complète</pre>
             </div>
           </div>
+          
+          <div class="test-section">
+            <div class="subsection-title">🧪 Tester l'endpoint</div>
+            <p style="color: #64748b; margin-bottom: 16px;">Cliquez sur le bouton pour tester cet endpoint directement depuis cette page.</p>
+            <button class="test-button" onclick="testEndpoint('GET', '/', null)">
+              Tester GET /
+            </button>
+            <div id="test-result-home" class="test-result"></div>
+          </div>
         </div>
       </section>
       
@@ -427,6 +578,11 @@ Page de documentation complète</pre>
         <h1 class="section-title">GET /api</h1>
         <div class="section-description">
           <p>Récupère les données des voitures depuis les sources externes (API SpiderVo). Les données sont converties de XML en JSON pour une utilisation plus facile.</p>
+          <p style="margin-top: 12px;">
+            <a href="#resources" onclick="showSection('resources', event.target)" style="color: #667eea; text-decoration: none;">
+              📚 Voir les ressources utiles pour les APIs REST →
+            </a>
+          </p>
         </div>
         
         <div class="endpoint-card">
@@ -446,6 +602,11 @@ Page de documentation complète</pre>
   .<span class="code-keyword">then</span>(data => <span class="code-keyword">console</span>.<span class="code-keyword">log</span>(data))
   .<span class="code-keyword">catch</span>(error => <span class="code-keyword">console</span>.<span class="code-keyword">error</span>(<span class="code-string">'Error:'</span>, error));</pre>
             </div>
+            <p style="margin-top: 12px; font-size: 0.9em; color: #64748b;">
+              <a href="https://developer.mozilla.org/fr/docs/Web/API/Fetch_API/Using_Fetch" target="_blank" style="color: #667eea;">
+                → En savoir plus sur Fetch API (MDN)
+              </a>
+            </p>
           </div>
           
           <div class="subsection">
@@ -462,10 +623,29 @@ Page de documentation complète</pre>
   // ... autres véhicules
 ]</pre>
             </div>
+            <p style="margin-top: 12px; font-size: 0.9em; color: #64748b;">
+              <a href="https://developer.mozilla.org/fr/docs/Learn/JavaScript/Objects/JSON" target="_blank" style="color: #667eea;">
+                → Comprendre le format JSON (MDN)
+              </a>
+            </p>
           </div>
           
           <div class="info-box">
-            <p><strong>Note:</strong> Les données proviennent d'une API externe (SpiderVo) configurée via la variable d'environnement <code>SPIDERVO_API_URL</code>.</p>
+            <p><strong>Note:</strong> Les données proviennent d'une API externe (SpiderVo).</p>
+            <p style="margin-top: 8px;">
+              <a href="#examples" onclick="showSection('examples', event.target)" style="color: #667eea; text-decoration: none;">
+                → Voir plus d'exemples d'utilisation
+              </a>
+            </p>
+          </div>
+          
+          <div class="test-section">
+            <div class="subsection-title">🧪 Tester l'endpoint</div>
+            <p style="color: #64748b; margin-bottom: 16px;">Cliquez sur le bouton pour récupérer les données des voitures.</p>
+            <button class="test-button" onclick="testEndpoint('GET', '/api', null)">
+              Tester GET /api
+            </button>
+            <div id="test-result-cars" class="test-result"></div>
           </div>
         </div>
       </section>
@@ -475,6 +655,11 @@ Page de documentation complète</pre>
         <h1 class="section-title">POST /api/form</h1>
         <div class="section-description">
           <p>Soumet un formulaire avec les données fournies. Les données sont reçues et traitées côté serveur.</p>
+          <p style="margin-top: 12px;">
+            <a href="https://developer.mozilla.org/fr/docs/Web/HTTP/Methods/POST" target="_blank" style="color: #667eea; text-decoration: none;">
+              📚 En savoir plus sur la méthode POST →
+            </a>
+          </p>
         </div>
         
         <div class="endpoint-card">
@@ -490,6 +675,11 @@ Page de documentation complète</pre>
             <div class="subsection-title">Paramètres</div>
             <div class="info-box">
               <p><strong>Body (JSON):</strong> Les données du formulaire au format JSON.</p>
+              <p style="margin-top: 8px;">
+                <a href="https://developer.mozilla.org/fr/docs/Web/HTTP/Methods/POST" target="_blank" style="color: #667eea; font-size: 0.9em;">
+                  → Documentation POST (MDN)
+                </a>
+              </p>
             </div>
           </div>
           
@@ -510,6 +700,11 @@ Page de documentation complète</pre>
   .<span class="code-keyword">then</span>(response => response.<span class="code-keyword">text</span>())
   .<span class="code-keyword">then</span>(data => <span class="code-keyword">console</span>.<span class="code-keyword">log</span>(data));</pre>
             </div>
+            <p style="margin-top: 12px; font-size: 0.9em; color: #64748b;">
+              <a href="#examples" onclick="showSection('examples', event.target)" style="color: #667eea;">
+                → Voir plus d'exemples avec POST
+              </a>
+            </p>
           </div>
           
           <div class="subsection">
@@ -517,6 +712,21 @@ Page de documentation complète</pre>
             <div class="response-example">
               <pre>"POST request to the homepage"</pre>
             </div>
+          </div>
+          
+          <div class="test-section">
+            <div class="subsection-title">🧪 Tester l'endpoint</div>
+            <p style="color: #64748b; margin-bottom: 16px;">Testez l'envoi d'un formulaire avec des données JSON.</p>
+            <label class="test-label">Données JSON à envoyer :</label>
+            <textarea id="form-data-input" class="test-input" rows="6" placeholder='{"nom":"Dupont","email":"dupont@example.com","message":"Votre message ici"}'>{
+  "nom": "Dupont",
+  "email": "dupont@example.com",
+  "message": "Votre message ici"
+}</textarea>
+            <button class="test-button" onclick="testEndpoint('POST', '/api/form', document.getElementById('form-data-input').value)">
+              Tester POST /api/form
+            </button>
+            <div id="test-result-form" class="test-result"></div>
           </div>
         </div>
       </section>
@@ -526,6 +736,11 @@ Page de documentation complète</pre>
         <h1 class="section-title">Exemples d'utilisation</h1>
         <div class="section-description">
           <p>Voici quelques exemples pratiques d'utilisation de l'API avec différents langages et frameworks.</p>
+          <p style="margin-top: 12px;">
+            <a href="#resources" onclick="showSection('resources', event.target)" style="color: #667eea; text-decoration: none;">
+              📚 Trouver plus d'outils et tutoriels →
+            </a>
+          </p>
         </div>
         
         <div class="endpoint-card">
@@ -542,6 +757,14 @@ Page de documentation complète</pre>
   }
 };</pre>
           </div>
+          <p style="margin-top: 12px; font-size: 0.9em; color: #64748b;">
+            <a href="https://developer.mozilla.org/fr/docs/Web/API/Fetch_API/Using_Fetch" target="_blank" style="color: #667eea;">
+              → Guide complet Fetch API (MDN)
+            </a> |
+            <a href="https://javascript.info/fetch" target="_blank" style="color: #667eea;">
+              → Tutoriel JavaScript.info
+            </a>
+          </p>
         </div>
         
         <div class="endpoint-card">
@@ -555,30 +778,253 @@ curl -X POST http://localhost:5000/api/form \\
   -H "Content-Type: application/json" \\
   -d '{"nom":"Dupont","email":"dupont@example.com"}'</pre>
           </div>
+          <p style="margin-top: 12px; font-size: 0.9em; color: #64748b;">
+            <a href="https://curl.se/docs/" target="_blank" style="color: #667eea;">
+              → Documentation cURL
+            </a> |
+            <a href="https://httpie.io/" target="_blank" style="color: #667eea;">
+              → Alternative moderne : HTTPie
+            </a>
+          </p>
+        </div>
+        
+        <div class="endpoint-card">
+          <div class="subsection-title">Postman / Insomnia</div>
+          <div class="subsection">
+            <p>Pour tester l'API avec des outils graphiques :</p>
+            <ul style="list-style: none; padding-left: 0; margin: 12px 0;">
+              <li style="margin: 8px 0;">
+                <a href="https://www.postman.com/" target="_blank" style="color: #667eea; text-decoration: none;">
+                  → 📬 Télécharger Postman
+                </a>
+              </li>
+              <li style="margin: 8px 0;">
+                <a href="https://insomnia.rest/" target="_blank" style="color: #667eea; text-decoration: none;">
+                  → 🔌 Télécharger Insomnia
+                </a>
+              </li>
+            </ul>
+            <p style="margin-top: 12px; font-size: 0.9em; color: #64748b;">
+              Importez les endpoints dans ces outils pour tester facilement l'API.
+            </p>
+          </div>
         </div>
       </section>
       
       <!-- Errors Section -->
       <section id="errors" class="section" style="display: none;">
-        <h1 class="section-title">Codes d'erreur</h1>
+        <h1 class="section-title">Codes d'erreur HTTP</h1>
         <div class="section-description">
           <p>L'API utilise les codes de statut HTTP standard pour indiquer le succès ou l'échec d'une requête.</p>
+          <p style="margin-top: 12px;">
+            <a href="https://developer.mozilla.org/fr/docs/Web/HTTP/Status" target="_blank" style="color: #667eea; text-decoration: none;">
+              📚 En savoir plus sur les codes HTTP →
+            </a>
+          </p>
         </div>
         
         <div class="endpoint-card">
           <div class="subsection">
             <div class="subsection-title">200 OK</div>
             <p>La requête a réussi. Les données demandées sont retournées dans la réponse.</p>
+            <p style="margin-top: 8px; font-size: 0.9em; color: #64748b;">
+              <a href="https://developer.mozilla.org/fr/docs/Web/HTTP/Status/200" target="_blank" style="color: #667eea;">Documentation MDN →</a>
+            </p>
+          </div>
+          
+          <div class="subsection">
+            <div class="subsection-title">400 Bad Request</div>
+            <p>La requête est mal formée ou contient des paramètres invalides.</p>
+            <p style="margin-top: 8px; font-size: 0.9em; color: #64748b;">
+              <a href="https://developer.mozilla.org/fr/docs/Web/HTTP/Status/400" target="_blank" style="color: #667eea;">Documentation MDN →</a>
+            </p>
           </div>
           
           <div class="subsection">
             <div class="subsection-title">404 Not Found</div>
             <p>La ressource demandée n'a pas été trouvée.</p>
+            <p style="margin-top: 8px; font-size: 0.9em; color: #64748b;">
+              <a href="https://developer.mozilla.org/fr/docs/Web/HTTP/Status/404" target="_blank" style="color: #667eea;">Documentation MDN →</a>
+            </p>
           </div>
           
           <div class="subsection">
             <div class="subsection-title">500 Internal Server Error</div>
             <p>Une erreur serveur s'est produite. Cela peut être dû à un problème avec l'API externe ou à une erreur de traitement des données.</p>
+            <p style="margin-top: 8px; font-size: 0.9em; color: #64748b;">
+              <a href="https://developer.mozilla.org/fr/docs/Web/HTTP/Status/500" target="_blank" style="color: #667eea;">Documentation MDN →</a>
+            </p>
+          </div>
+          
+          <div class="subsection">
+            <div class="subsection-title">502 Bad Gateway</div>
+            <p>Erreur de communication avec l'API externe (SpiderVo).</p>
+            <p style="margin-top: 8px; font-size: 0.9em; color: #64748b;">
+              <a href="https://developer.mozilla.org/fr/docs/Web/HTTP/Status/502" target="_blank" style="color: #667eea;">Documentation MDN →</a>
+            </p>
+          </div>
+          
+          <div class="subsection">
+            <div class="subsection-title">503 Service Unavailable</div>
+            <p>Le service est temporairement indisponible ou mal configuré.</p>
+            <p style="margin-top: 8px; font-size: 0.9em; color: #64748b;">
+              <a href="https://developer.mozilla.org/fr/docs/Web/HTTP/Status/503" target="_blank" style="color: #667eea;">Documentation MDN →</a>
+            </p>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Resources Section -->
+      <section id="resources" class="section" style="display: none;">
+        <h1 class="section-title">Ressources et liens utiles</h1>
+        <div class="section-description">
+          <p>Voici une collection de ressources utiles pour travailler avec cette API et les APIs REST en général.</p>
+        </div>
+        
+        <div class="endpoint-card">
+          <div class="subsection-title">📚 Documentation et guides</div>
+          <div class="subsection">
+            <p style="margin-bottom: 8px;"><strong>REST API</strong></p>
+            <ul style="list-style: none; padding-left: 0; margin: 8px 0;">
+              <li style="margin: 6px 0;">
+                <a href="https://developer.mozilla.org/fr/docs/Glossary/REST" target="_blank" style="color: #667eea; text-decoration: none;">
+                  → Qu'est-ce qu'une API REST ? (MDN)
+                </a>
+              </li>
+              <li style="margin: 6px 0;">
+                <a href="https://restfulapi.net/" target="_blank" style="color: #667eea; text-decoration: none;">
+                  → REST API Tutorial
+                </a>
+              </li>
+              <li style="margin: 6px 0;">
+                <a href="https://developer.mozilla.org/fr/docs/Web/HTTP/Methods" target="_blank" style="color: #667eea; text-decoration: none;">
+                  → Méthodes HTTP (GET, POST, PUT, DELETE)
+                </a>
+              </li>
+            </ul>
+          </div>
+          
+          <div class="subsection">
+            <p style="margin-bottom: 8px;"><strong>JSON</strong></p>
+            <ul style="list-style: none; padding-left: 0; margin: 8px 0;">
+              <li style="margin: 6px 0;">
+                <a href="https://developer.mozilla.org/fr/docs/Learn/JavaScript/Objects/JSON" target="_blank" style="color: #667eea; text-decoration: none;">
+                  → Introduction à JSON (MDN)
+                </a>
+              </li>
+              <li style="margin: 6px 0;">
+                <a href="https://www.json.org/json-fr.html" target="_blank" style="color: #667eea; text-decoration: none;">
+                  → Spécification JSON officielle
+                </a>
+              </li>
+            </ul>
+          </div>
+          
+          <div class="subsection">
+            <p style="margin-bottom: 8px;"><strong>Express.js</strong></p>
+            <ul style="list-style: none; padding-left: 0; margin: 8px 0;">
+              <li style="margin: 6px 0;">
+                <a href="https://expressjs.com/" target="_blank" style="color: #667eea; text-decoration: none;">
+                  → Documentation Express.js officielle
+                </a>
+              </li>
+              <li style="margin: 6px 0;">
+                <a href="https://expressjs.com/fr/guide/routing.html" target="_blank" style="color: #667eea; text-decoration: none;">
+                  → Guide de routage Express.js
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="endpoint-card">
+          <div class="subsection-title">🛠️ Outils de test d'API</div>
+          <div class="subsection">
+            <p style="margin-bottom: 8px;"><strong>Clients HTTP</strong></p>
+            <ul style="list-style: none; padding-left: 0; margin: 8px 0;">
+              <li style="margin: 6px 0;">
+                <a href="https://www.postman.com/" target="_blank" style="color: #667eea; text-decoration: none;">
+                  → Postman - Client API complet
+                </a>
+              </li>
+              <li style="margin: 6px 0;">
+                <a href="https://insomnia.rest/" target="_blank" style="color: #667eea; text-decoration: none;">
+                  → Insomnia - Alternative à Postman
+                </a>
+              </li>
+              <li style="margin: 6px 0;">
+                <a href="https://httpie.io/" target="_blank" style="color: #667eea; text-decoration: none;">
+                  → HTTPie - Client HTTP en ligne de commande
+                </a>
+              </li>
+              <li style="margin: 6px 0;">
+                <a href="https://curl.se/" target="_blank" style="color: #667eea; text-decoration: none;">
+                  → cURL - Outil en ligne de commande
+                </a>
+              </li>
+            </ul>
+          </div>
+          
+          <div class="subsection">
+            <p style="margin-bottom: 8px;"><strong>Test dans le navigateur</strong></p>
+            <ul style="list-style: none; padding-left: 0; margin: 8px 0;">
+              <li style="margin: 6px 0;">
+                <a href="https://developer.mozilla.org/fr/docs/Web/API/Fetch_API" target="_blank" style="color: #667eea; text-decoration: none;">
+                  → Fetch API (MDN)
+                </a>
+              </li>
+              <li style="margin: 6px 0;">
+                <a href="https://developer.mozilla.org/fr/docs/Web/API/XMLHttpRequest" target="_blank" style="color: #667eea; text-decoration: none;">
+                  → XMLHttpRequest (MDN)
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="endpoint-card">
+          <div class="subsection-title">🔗 Liens du projet</div>
+          <div class="subsection">
+            <ul style="list-style: none; padding-left: 0; margin: 8px 0;">
+              <li style="margin: 6px 0;">
+                <a href="https://github.com/mkb-automobile/mkb-backend" target="_blank" style="color: #667eea; text-decoration: none;">
+                  → 📦 Code source sur GitHub
+                </a>
+              </li>
+              <li style="margin: 6px 0;">
+                <a href="https://nodejs.org/" target="_blank" style="color: #667eea; text-decoration: none;">
+                  → Node.js - Runtime JavaScript
+                </a>
+              </li>
+              <li style="margin: 6px 0;">
+                <a href="https://www.npmjs.com/" target="_blank" style="color: #667eea; text-decoration: none;">
+                  → npm - Gestionnaire de paquets
+                </a>
+              </li>
+    </ul>
+          </div>
+        </div>
+        
+        <div class="endpoint-card">
+          <div class="subsection-title">📖 Tutoriels et apprentissage</div>
+          <div class="subsection">
+            <ul style="list-style: none; padding-left: 0; margin: 8px 0;">
+              <li style="margin: 6px 0;">
+                <a href="https://developer.mozilla.org/fr/docs/Web/API/Fetch_API/Using_Fetch" target="_blank" style="color: #667eea; text-decoration: none;">
+                  → Utiliser l'API Fetch (MDN)
+                </a>
+              </li>
+              <li style="margin: 6px 0;">
+                <a href="https://javascript.info/fetch" target="_blank" style="color: #667eea; text-decoration: none;">
+                  → Fetch API Tutorial (JavaScript.info)
+                </a>
+              </li>
+              <li style="margin: 6px 0;">
+                <a href="https://expressjs.com/fr/starter/installing.html" target="_blank" style="color: #667eea; text-decoration: none;">
+                  → Guide de démarrage Express.js
+                </a>
+              </li>
+    </ul>
           </div>
         </div>
       </section>
@@ -622,7 +1068,8 @@ curl -X POST http://localhost:5000/api/form \\
         'endpoint-cars': 'GET /api',
         'endpoint-form': 'POST /api/form',
         'examples': 'Exemples',
-        'errors': 'Codes d\'erreur'
+        'errors': 'Codes d\'erreur',
+        'resources': 'Liens utiles'
       };
       document.getElementById('page-title').textContent = titleMap[sectionId] || 'Documentation';
       
@@ -694,6 +1141,104 @@ curl -X POST http://localhost:5000/api/form \\
         sidebar.classList.remove('open');
       }
     });
+    
+    // Test endpoint function
+    async function testEndpoint(method, path, bodyData) {
+      const resultId = {
+        'GET /': 'test-result-home',
+        'GET /api': 'test-result-cars',
+        'POST /api/form': 'test-result-form'
+      }[method + ' ' + path];
+      
+      if (!resultId) return;
+      
+      const resultDiv = document.getElementById(resultId);
+      const button = event.target;
+      const originalText = button.textContent;
+      
+      // Show loading state
+      button.disabled = true;
+      button.innerHTML = 'Test en cours... <span class="test-loading"></span>';
+      resultDiv.style.display = 'none';
+      
+      try {
+        const baseUrl = window.location.origin;
+        const url = baseUrl + path;
+        
+        const options = {
+          method: method,
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        };
+        
+        if (bodyData && method === 'POST') {
+          try {
+            // Validate JSON
+            JSON.parse(bodyData);
+            options.body = bodyData;
+          } catch (e) {
+            throw new Error('JSON invalide : ' + e.message);
+          }
+        }
+        
+        const startTime = Date.now();
+        const response = await fetch(url, options);
+        const endTime = Date.now();
+        const duration = endTime - startTime;
+        
+        let responseData;
+        const contentType = response.headers.get('content-type');
+        
+        if (contentType && contentType.includes('application/json')) {
+          responseData = await response.json();
+        } else {
+          responseData = await response.text();
+        }
+        
+        // Format response
+        let formattedResponse;
+        if (typeof responseData === 'object') {
+          formattedResponse = JSON.stringify(responseData, null, 2);
+        } else {
+          formattedResponse = responseData;
+        }
+        
+        // Show success result
+        resultDiv.className = 'test-result success';
+        resultDiv.innerHTML = \`
+          <div class="test-result-header">
+            <span>✅ Succès</span>
+            <span style="font-size: 0.85em; font-weight: normal; color: #64748b;">
+              (Status: \${response.status} \${response.statusText} | Temps: \${duration}ms)
+            </span>
+          </div>
+          <div class="test-result-content">\${formattedResponse}</div>
+        \`;
+        resultDiv.style.display = 'block';
+        
+        // Scroll to result
+        resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        
+      } catch (error) {
+        // Show error result
+        resultDiv.className = 'test-result error';
+        resultDiv.innerHTML = \`
+          <div class="test-result-header">
+            <span>❌ Erreur</span>
+          </div>
+          <div class="test-result-content">\${error.message || 'Une erreur est survenue lors de la requête'}</div>
+        \`;
+        resultDiv.style.display = 'block';
+        
+        // Scroll to result
+        resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      } finally {
+        // Restore button
+        button.disabled = false;
+        button.textContent = originalText;
+      }
+    }
   </script>
 </body>
 </html>
