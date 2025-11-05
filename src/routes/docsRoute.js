@@ -1,12 +1,12 @@
 import express from "express";
 import {
-	getIntroductionPage,
 	getAuthenticationPage,
-	getEndpointHomePage,
 	getEndpointCarsPage,
 	getEndpointFormPage,
-	getExamplesPage,
+	getEndpointHomePage,
 	getErrorsPage,
+	getExamplesPage,
+	getIntroductionPage,
 	getResourcesPage
 } from "../views/pages/index.js";
 
